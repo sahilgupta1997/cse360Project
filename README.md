@@ -1,1 +1,1 @@
-this is out cse 360 project 
+this is our cse 360 project 
