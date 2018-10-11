@@ -1,1 +1,1 @@
-This Java example is provided by Essence of Zen https://essenceofzen.org
+this is out cse 360 project 
