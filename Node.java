@@ -4,17 +4,17 @@ public class Node {
 	
 	private String activityName;
 	private int duration;
-	private ArrayList<String> dependencies;
+	private ArrayList<String> dependencies = new ArrayList<String>();
 	
 	public Node() {
 		this.activityName = "ExampleActivity";
 		this.duration = 1;
-		this.dependencies = new ArrayList<String>();
+		this.dependencies.add("null");
 	}
 	public Node(String activityName, int duration, ArrayList<String> dependencies) {
 		this.activityName = activityName;
 		this.duration = duration;
-		this.dependencies = dependencies;
+		this.dependencies = (ArrayList<String>) dependencies.clone();
 	}
 	public String getActivityName() {
 		return activityName;
@@ -32,7 +32,9 @@ public class Node {
 		return dependencies;
 	}
 	public void setDependencies(ArrayList<String> dependencies) {
-		this.dependencies = dependencies;
+		for(int i=0;i<dependencies.size();i++) {
+			this.dependencies.add(dependencies.get(i));
+		}
 	}
 	@Override
 	public String toString() {

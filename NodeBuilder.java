@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,13 +52,14 @@ public class NodeBuilder {
 				dependencies.add("1");
 			}
 			
-			if(activityName.equals("stop")) {
+			if(!activityName.equals("stop")) {
 				Node myNode = new Node(activityName, duration, dependencies);
 				nodes.add(myNode);
 			} else {
 				stop = true;
 			}
 			
+			System.out.println(dependencies.size());
 			System.out.println(nodes.size());
 			
 			//Closing Scanner
@@ -65,7 +67,11 @@ public class NodeBuilder {
 			
 			i += 1;
 			
-		} while (stop);
+		} while (!stop);
+		
+		for(int x=0;x<nodes.size();x++) {
+			System.out.println(nodes.get(x));
+		}
 		
 		kb.close();
 	}
