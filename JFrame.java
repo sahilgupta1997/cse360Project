@@ -93,13 +93,13 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         //if the help button is clicked
         else if(str.equals("Help")){
             //showing message to the user
-            JOptionPane.showMessageDialog(bt1, "This is help page. Hope this helps you in some way.");
+            JOptionPane.showMessageDialog(bt1, "To compute the Network, type Activity name(multiple characters),Duration(integer),Dependencies(predecessors). Then press Calculate. If an error is displayed, click on reset and enter again. To close the screen, click on X on top right corner.");
         }
         else if(str.equals("Project Title")){
           
         }
         //if calculate button is clicked add the text to the text area
-        else if(str.equals("Calculate")){           //THIS IS WHERE YOU WRITE YOUR CODE FOR CALCULATE BUTTON WHERE IT COMPUTES THE USER INPUT
+        else if(str.equals("Calculate")){          
             ta1.setText(tf.getText());
         }
         //if user want to exit
