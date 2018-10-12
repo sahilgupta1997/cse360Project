@@ -1,6 +1,7 @@
 //importing required classes
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,35 +11,44 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JLabel;;
 //defining class, implementing listener to specify action for button
-public class DisplayGUI extends JFrame implements ActionListener{
+public class DisplayGUI  extends JFrame implements ActionListener{
     //Declaring required component
     JTextField tf;
     JButton bt1,bt2,bt3,bt4,bt5,bt6;
     JTextArea ta1;
-    JPanel pl1,pl2,pl3;
-  
+    JPanel pl1,pl2,pl3,pl4,pl5;
+    JLabel lb1;
     //defining the constructor
     public DisplayGUI(){
         //initiallizing the component
+    	
         tf=new JTextField(20);
         ta1=new JTextArea(25,20);
         bt1=new JButton("About");
         bt2=new JButton("Help");
-        bt3=new JButton("Project Title");
+        lb1 = new JLabel("Network Path Analyzer");
         bt4=new JButton("X");
         bt5=new JButton("Calculate");
         bt6=new JButton("Reset");
         bt4.setBackground(Color.red);
         pl1=new JPanel();
+        pl4 = new JPanel();
+        pl5 = new JPanel();
+        pl1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        pl5.setLayout(new FlowLayout(FlowLayout.LEFT, 110, 10));
         pl2=new JPanel();
         pl3=new JPanel();
+        
       
         //adding the component to panel
-        pl1.add(bt1);
-        pl1.add(bt2);
-        pl1.add(bt3);
-        pl1.add(bt4);
+        pl4.add(bt1);
+        pl4.add(bt2);
+        pl1.add(pl4);
+        pl5.add(lb1);
+        pl5.add(bt4);
+        pl1.add(pl5);
         pl2.setLayout(new GridLayout(2,1));
         pl2.add(bt5);
         pl2.add(bt6);
@@ -54,7 +64,6 @@ public class DisplayGUI extends JFrame implements ActionListener{
         //adding the listener to the button
         bt1.addActionListener(this);
         bt2.addActionListener(this);
-        bt3.addActionListener(this);
         bt4.addActionListener(this);
         bt5.addActionListener(this);
         bt6.addActionListener(this);
@@ -62,8 +71,9 @@ public class DisplayGUI extends JFrame implements ActionListener{
     //defining the main function
     public static void main(String[] args) {
         //Creating an object of the class
-        DisplayGUI ob=new DisplayGUI();
+    	DisplayGUI  ob=new DisplayGUI();
         //setting the size of the GUI
+        ob.setTitle("Network Path Analyzer");
         ob.setSize(700,500);
         //making it visible
         ob.setVisible(true);
