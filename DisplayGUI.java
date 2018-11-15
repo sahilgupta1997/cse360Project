@@ -119,7 +119,7 @@ public class DisplayGUI  extends JFrame implements ActionListener{
     //function to perform action according to the buttons
     @Override
     public void actionPerformed(ActionEvent ae) {
-        //getting the component who created the action
+        //getting the component who created the actionR
         String str=ae.getActionCommand();
         //if about button is clicked
         if(str.equals("About")){
@@ -156,11 +156,18 @@ public class DisplayGUI  extends JFrame implements ActionListener{
                     Date date = new Date();
                     buffer.write(title);
                     buffer.newLine();
+                    buffer.newLine();
                     buffer.write("\nDate and Time of Creation: "+dateFormat.format(date));
                    
                     buffer.newLine();
+                    buffer.newLine();
+                    buffer.write("\nList of activities & their duration:"); //STILL NEED TO WRITE CODE FOR THIS
+                    buffer.newLine();
+                    buffer.newLine();
+                    buffer.write("List of all paths with the activity names and total duration:");
+                    buffer.newLine();
                     
-                    /* String txtArea=ta1.getText();
+                    String txtArea=ta1.getText();
                     String[] txtArray= txtArea.split("\n");
                     for(int i=0;i<txtArray.length;i++)
                     {
@@ -168,14 +175,9 @@ public class DisplayGUI  extends JFrame implements ActionListener{
                      buffer.newLine();
                     }
                    buffer.close();
-                   ta1.setText("Report "+ta2.getText()+" Generated");
-                  */ 
-                    //ADD YOUR CODE HERE TO PRINT LIST OF ACTIVITIES
-                    
-                    
-                    
-            
-               //     buffer.write("\nList of activities & their duration: " + activityName.getText());
+                   ta1.setText("Report Generated");
+                  
+         
                
                     buffer.close();
                 }
