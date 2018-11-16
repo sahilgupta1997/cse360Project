@@ -4,7 +4,7 @@ public class Window {
 	// creates the height and width variables
 	// private means only Window class can access them
 	private static int HEIGHT = 600;
-	private static int WIDTH = 480;
+	private static int WIDTH = 485;
 	
 	//main method
 	public static void main(String args[]) {
