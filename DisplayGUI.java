@@ -25,12 +25,11 @@ import javax.swing.JRadioButton;
 import java.util.ArrayList;
 
 
-
 //defining class, implementing listener to specify action for button
 public class DisplayGUI  extends JFrame implements ActionListener{
     //Declaring required component
     JTextArea ta2;
-    JButton bt1,bt2,bt3,bt4,bt5,bt6,btPath,btReport;
+    JButton bt1,bt2,bt3,bt4,bt5,bt6,bt7,btPath,btReport;
     JTextArea ta1;
     JPanel pl1,pl2,pl3,pl4,pl5;
     JLabel lb1;
@@ -42,14 +41,15 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         
         //initializing the component
     	
-        ta2=new JTextArea(4,20);
+        ta2=new JTextArea(7,35);
         ta1=new JTextArea(25,20);
         bt1=new JButton("About");
         bt2=new JButton("Help");
         lb1 = new JLabel("Network Path Analyzer");
         bt4=new JButton("X");
-        bt5=new JButton("Calculate");
+        bt5=new JButton("Process");
         bt6=new JButton("Reset");
+        bt7=new JButton("Change Durations");
         btReport = new JButton("Generate Report");
         rdBtn1 = new JRadioButton("Show only critical paths");
         rdBtn2 = new JRadioButton("Show all Paths");
@@ -58,7 +58,7 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         pl4 = new JPanel();
         pl5 = new JPanel();
         pl1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        pl5.setLayout(new FlowLayout(FlowLayout.LEFT, 110, 10));
+        pl5.setLayout(new FlowLayout(FlowLayout.LEFT, 150, 10));
         pl2=new JPanel();
         pl3=new JPanel();
       
@@ -69,7 +69,7 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         pl5.add(lb1);
         pl5.add(bt4);
         pl1.add(pl5);
-        pl2.setLayout(new GridLayout(2,1));
+        pl2.setLayout(new GridLayout(4,1));
         pl2.add(rdBtn1);
         pl2.add(rdBtn2);
         pl2.add(bt5);
@@ -78,6 +78,7 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         pl3.add(pl2);
         pl3.add(ta2);
         pl2.add(btReport);
+        pl2.add(bt7);
         //setting the GUI layout and adding the component
         setLayout(new BorderLayout());
         add(pl1,BorderLayout.NORTH);
@@ -100,6 +101,8 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         bt5.addActionListener(this);
         bt6.addActionListener(this);
         btReport.addActionListener(this);
+        bt7.addActionListener(this);
+        bt7.setVisible(false);
     }
     //defining the main function
     public static void main(String[] args) {
@@ -124,32 +127,38 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         //if about button is clicked
         if(str.equals("About")){
             //showing the message to the user
-            JOptionPane.showMessageDialog(bt1, "This program allows the user to create nodes of a desired network path by inputting the activity name, duration and a list of predecessors");
+            JOptionPane.showMessageDialog(bt1, "This program allows the user to create nodes of a desired network path by inputting the activity name, duration and a list of predecessors.");
         }
         //if the help button is clicked
         else if(str.equals("Help")){
             //showing message to the user
-            JOptionPane.showMessageDialog(bt1, "To compute the Network, type Activity name(multiple characters),Duration(integer),Dependencies(predecessors). Then press Calculate. If an error is displayed, click on OK and enter again. To close the screen, click on X on top right corner.");
+            JOptionPane.showMessageDialog(bt1, "To compute the Network, type Activity name(multiple characters),Duration(integer),Dependencies(predecessors). Then press Process and  If an error is displayed, click on OK and enter again. To generate a report click Generate Report. To close the screen, click on X on top right corner.");
         }
        
-        //if calculate button is clicked add the text to the text area
-        else if(str.equals("Calculate")){ 
+        //if Process button is clicked add the text to the text area
+        else if(str.equals("Process")){
         	this.nodes = new NodeBuilder();
                 String input = ta2.getText();
                 Scanner s = new Scanner(input);
                 s.useDelimiter("\\+");
                 while(s.hasNext()){
                     String temp = s.next();
-                    nodes.add(temp);
+                    if(nodes.add(temp)== -1){
+                        ta1.setText("User input invalid reset and do it again");
+                        break;
+                    }
                 }
                 s.close();
                 ta1.setText(nodes.computeNetwork(onlyCrit));
-                nodes.changeDuration(onlyCrit);
+                bt7.setVisible(true);
+                
         }
         else if(str.equals("Generate Report"))
         {
+        	
                 try {
-                	FileWriter fw = new FileWriter("D:\\Report.txt");
+                	String filename = JOptionPane.showInputDialog("Please input a filename:");
+                	FileWriter fw = new FileWriter("D:\\" + filename + ".txt");
                 	BufferedWriter buffer = new BufferedWriter(fw);
                 	String title="Title: "+lb1.getText();
                 	DateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY HH:mm:ss");
@@ -162,11 +171,15 @@ public class DisplayGUI  extends JFrame implements ActionListener{
                     buffer.newLine();
                     buffer.newLine();
                     buffer.write("\nList of activities & their duration:"); //STILL NEED TO WRITE CODE FOR THIS
+    
+                    
+                    
+                    
+                    
                     buffer.newLine();
                     buffer.newLine();
                     buffer.write("List of all paths with the activity names and total duration:");
-                    buffer.newLine();
-                    
+                    buffer.newLine();             
                     String txtArea=ta1.getText();
                     String[] txtArray= txtArea.split("\n");
                     for(int i=0;i<txtArray.length;i++)
@@ -197,10 +210,17 @@ public class DisplayGUI  extends JFrame implements ActionListener{
         else if(str.equals("Show all Paths")){
             onlyCrit = false;
         }
+        //changing durations only appears after path created goes away from reset 
+        else if(str.equals("Change Durations")){
+            String activityName = JOptionPane.showInputDialog("Enter Activity Name");
+            String duration = JOptionPane.showInputDialog("Enter New Duration");
+            ta1.setText(nodes.changeDuration(onlyCrit, activityName, Integer.parseInt(duration)));
+        }
         //resetting the text area
         else{
             ta1.setText("");
             ta2.setText("");
+            bt7.setVisible(false);
         }
           
     }
